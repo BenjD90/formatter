@@ -17,10 +17,16 @@
 }
 
 	$(document).ready(function() {
+		window.updateCSSOut = function() {
+			var formatChoosen = $('input[name=format]:checked').val();
+			$('#pre').removeClass();
+			$('#pre').addClass(formatChoosen);
+			return formatChoosen;
+		};
+
 		function getInputVal() {
 			return $('#pre').text();
 		}
-
 
 		hljs.configure({
 			tabReplace: ' '
@@ -42,19 +48,17 @@
 		});
 
 		$('#clearCdata').click(function() {
-			$('#pre').html(getInputVal().replace(/(<\!\[CDATA\[)|(\]\]>)/g,''));
+			$('#pre').text(getInputVal().replace(/(<\!\[CDATA\[)|(\]\]>)/g,''));
 		});
 
 		$('#format').click(function() {
-			var formatChoosen = $('input[name=format]:checked').val();
-			$('#pre').removeClass();
-			$('#pre').addClass(formatChoosen);
+			var formatChoosen = updateCSSOut();
 			if(formatChoosen === 'xml') {
-				$('#pre').html(vkbeautify.xml(getInputVal()));
+				$('#pre').text(vkbeautify.xml(getInputVal()));
 			} else if(formatChoosen === 'json') {
-				$('#pre').html(vkbeautify.json(getInputVal()));
+				$('#pre').text(vkbeautify.json(getInputVal()));
 			} else if(formatChoosen === 'bean') {
-				$('#pre').html(benjbeautify.bean(getInputVal()));
+				$('#pre').text(benjbeautify.bean(getInputVal()));
 			}
 			format();
 		});
@@ -116,13 +120,13 @@
 		<button id="format" class="btn btn-default btn-xs">Format</button>
 		<button id="select" class="btn btn-default btn-xs" onClick="selectText('pre')">Select output</button>
 		<div class="btn-group" data-toggle="buttons">
-			<label class="btn btn-primary btn-xs"><input type="radio" name="format" value="xml" />xml</label>
-			<label class="btn btn-primary btn-xs active"><input type="radio" name="format" value="json" checked />JSON</label>
-			<label class="btn btn-primary btn-xs"><input type="radio" name="format" value="bean" />scala/java bean</label>
-			<label class="btn btn-primary btn-xs"><input type="radio" name="format" value="Nginx" />Nginx</label>
-			<label class="btn btn-primary btn-xs"><input type="radio" name="format" value="Bash" />Bash</label>
-			<label class="btn btn-primary btn-xs"><input type="radio" name="format" value="CSS" />CSS</label>
-			<label class="btn btn-primary btn-xs"><input type="radio" name="format" value="HTTP" />HTTP</label>
+			<label class="btn btn-primary btn-xs"><input type="radio" name="format" value="xml" onChange="updateCSSOut()" />xml</label>
+			<label class="btn btn-primary btn-xs active"><input type="radio" name="format" onChange="updateCSSOut()" value="json" checked />JSON</label>
+			<label class="btn btn-primary btn-xs"><input type="radio" name="format" onChange="updateCSSOut()" value="bean" />scala/java bean</label>
+			<label class="btn btn-primary btn-xs"><input type="radio" name="format" onChange="updateCSSOut()" value="Nginx" />Nginx</label>
+			<label class="btn btn-primary btn-xs"><input type="radio" name="format" onChange="updateCSSOut()" value="Bash" />Bash</label>
+			<label class="btn btn-primary btn-xs"><input type="radio" name="format" onChange="updateCSSOut()" value="CSS" />CSS</label>
+			<label class="btn btn-primary btn-xs"><input type="radio" name="format" onChange="updateCSSOut()" value="HTTP" />HTTP</label>
 		</div>
 		<button id="clearCdata" class="btn btn-default btn-xs">Clear CDATA</button>
 	</div>
