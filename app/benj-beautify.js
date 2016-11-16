@@ -13,7 +13,6 @@
 			var out = '';
 			var deep = 0;
 			for(var i = 0; i < textToFormat.length; i++) {
-				console.log(textToFormat[i]);
 				var letter = textToFormat[i];
 				if(letter === '(') {
 					deep++;

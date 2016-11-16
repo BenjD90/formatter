@@ -8,17 +8,13 @@
 	<script type="text/javascript" src="beautify.js"></script>
 	<script type="text/javascript" src="benj-beautify.js"></script>
 	<script type="text/javascript">
-	function selectText(containerid) {
-		if (document.selection) {
-			var range = document.body.createTextRange();
-			range.moveToElementText(document.getElementById(containerid));
-			range.select();
-		} else if (window.getSelection) {
-			var range = document.createRange();
-			range.selectNode(document.getElementById(containerid));
-			window.getSelection().addRange(range);
-		}
-	}
+	function selectText(id) {
+    var range = document.createRange();
+    range.selectNodeContents(document.getElementById(id));
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+}
 
 	$(document).ready(function() {
 		function getInputVal() {
