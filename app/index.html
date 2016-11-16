@@ -1,47 +1,136 @@
-<?xml version="1.0" encoding="UTF-8"?>
+
 <html>
-		<head>
-				<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/github.min.css" />
-				<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
-				<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js">
-				</script>
-				<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous">
-				</script>
-				<script type="text/javascript" src="beautify.js">
-				</script>
-				<script type="text/javascript" src="benj-beautify.js">
-				</script>
-				<script type="text/javascript">			function selectText(containerid) {				if (document.selection) {					var range = document.body.createTextRange();					range.moveToElementText(document.getElementById(containerid));					range.select();				} else if (window.getSelection) {					var range = document.createRange();					range.selectNode(document.getElementById(containerid));					window.getSelection().addRange(range);				}			}			$(document).ready(function() {				function getInputVal() {					return $('#pre').text();				}				hljs.configure({					tabReplace: ' '				});				var format = function() {					$('#pre').text(getInputVal());					$('#pre').each(function(i, block) {						hljs.highlightBlock(block);					});				};				$('textarea').keyup(function() {					format();				});				$('#clear').click(function() {					$('#pre').html('');				});				$('#clearCdata').click(function() {					$('#pre').html(getInputVal().replace(/(<\!\[CDATA\[)|(\]\]>)/g,''));				});				$('#format').click(function() {					var formatChoosen = $('input[name=format]:checked').val();					$('#pre').removeClass();					$('#pre').addClass(formatChoosen);					if(formatChoosen === 'xml') {						$('#pre').html(vkbeautify.xml(getInputVal()));					} else if(formatChoosen === 'json') {						$('#pre').html(vkbeautify.json(getInputVal()));					} else if(formatChoosen === 'bean') {						$('#pre').html(benjbeautify.bean(getInputVal()));					}					format();				});			});		</script>
-				<style type="text/css">			body {				margin: 0;				outline: none;			}			.form-control {				width: inherit;				display: inline-block;			}			.input-xs {				height: 22px;				padding: 2px 5px;				font-size: 12px;				line-height: 1.5; /* If Placeholder of the input is moved up, rem/modify this. */				border-radius: 3px;			}			.btn:focus {			  outline: none;			}			#menu {				height: 22px;			}			#pre {				background-color: #fff;				font-family: Consolas;				font-weight: bold;				width: 100%;				height: calc(100% - 22px);				overflow: auto;				border-top: 1px solid black;				border-radius: 0px;				box-sizing: border-box;				margin: 0px;			}			#pre > span {				font-weight: normal;			}			#pre:focus {				outline: none;			}		</style>
-				<title>Formatter</title>
-		</head>
-		<body>
-				<div id="menu">
-						<input type="text" class="form-control input-xs" onkeyup="$('title').html($('#title').val())" id="title" value="Formatter" />
-						<button id="clear" class="btn btn-default btn-xs">Clear</button>
-						<button id="format" class="btn btn-default btn-xs">Format</button>
-						<button id="select" class="btn btn-default btn-xs" onClick="selectText('pre')">Select output</button>
-						<div class="btn-group" data-toggle="buttons">
-								<label class="btn btn-primary btn-xs">
-										<input type="radio" name="format" value="xml" />xml</label>
-										<label class="btn btn-primary btn-xs active">
-												<input type="radio" name="format" value="json" checked />JSON</label>
-												<label class="btn btn-primary btn-xs">
-														<input type="radio" name="format" value="bean" />scala/java bean</label>
-														<label class="btn btn-primary btn-xs">
-																<input type="radio" name="format" value="Nginx" />Nginx</label>
-																<label class="btn btn-primary btn-xs">
-																		<input type="radio" name="format" value="Bash" />Bash</label>
-																		<label class="btn btn-primary btn-xs">
-																				<input type="radio" name="format" value="CSS" />CSS</label>
-																				<label class="btn btn-primary btn-xs">
-																						<input type="radio" name="format" value="HTTP" />HTTP</label>
-																				</div>
-																				<button id="clearCdata" class="btn btn-default btn-xs">Clear CDATA</button>
-																		</div>
-																		<pre id="pre" contenteditable>
-																		</pre>
-																		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
-																		</script>
-																</body>
-														</html>
+<head>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/github.min.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="beautify.js"></script>
+	<script type="text/javascript" src="benj-beautify.js"></script>
+	<script type="text/javascript">
+	function selectText(containerid) {
+		if (document.selection) {
+			var range = document.body.createTextRange();
+			range.moveToElementText(document.getElementById(containerid));
+			range.select();
+		} else if (window.getSelection) {
+			var range = document.createRange();
+			range.selectNode(document.getElementById(containerid));
+			window.getSelection().addRange(range);
+		}
+	}
+
+	$(document).ready(function() {
+		function getInputVal() {
+			return $('#pre').text();
+		}
+
+
+		hljs.configure({
+			tabReplace: ' '
+		});
+
+		var format = function() {
+			$('#pre').text(getInputVal());
+			$('#pre').each(function(i, block) {
+				hljs.highlightBlock(block);
+			});
+		};
+
+		$('textarea').keyup(function() {
+			format();
+		});
+
+		$('#clear').click(function() {
+			$('#pre').html('');
+		});
+
+		$('#clearCdata').click(function() {
+			$('#pre').html(getInputVal().replace(/(<\!\[CDATA\[)|(\]\]>)/g,''));
+		});
+
+		$('#format').click(function() {
+			var formatChoosen = $('input[name=format]:checked').val();
+			$('#pre').removeClass();
+			$('#pre').addClass(formatChoosen);
+			if(formatChoosen === 'xml') {
+				$('#pre').html(vkbeautify.xml(getInputVal()));
+			} else if(formatChoosen === 'json') {
+				$('#pre').html(vkbeautify.json(getInputVal()));
+			} else if(formatChoosen === 'bean') {
+				$('#pre').html(benjbeautify.bean(getInputVal()));
+			}
+			format();
+		});
+	});
+</script>
+<style type="text/css">
+	body {
+		margin: 0;
+		outline: none;
+
+	}
+
+	.form-control {
+		width: inherit;
+		display: inline-block;
+	}
+	.input-xs {
+		height: 22px;
+		padding: 2px 5px;
+		font-size: 12px;
+		line-height: 1.5; /* If Placeholder of the input is moved up, rem/modify this. */
+		border-radius: 3px;
+	}
+
+	.btn:focus {
+		outline: none;
+	}
+
+	#menu {
+		height: 22px;
+	}
+	#pre {
+		background-color: #fff;
+		font-family: Consolas;
+		font-weight: bold;
+		width: 100%;
+		height: calc(100% - 22px);
+		overflow: auto;
+		border-top: 1px solid black;
+		border-radius: 0px;
+		box-sizing: border-box;
+		margin: 0px;
+	}
+
+	#pre > span {
+		font-weight: normal;
+	}
+
+	#pre:focus {
+		outline: none;
+	}
+</style>
+<title>Formatter</title>
+</head>
+<body>
+	<div id="menu">
+		<input type="text" class="form-control input-xs" onkeyup="$('title').html($('#title').val())" id="title" value="Formatter" />
+		<button id="clear" class="btn btn-default btn-xs">Clear</button>
+		<button id="format" class="btn btn-default btn-xs">Format</button>
+		<button id="select" class="btn btn-default btn-xs" onClick="selectText('pre')">Select output</button>
+		<div class="btn-group" data-toggle="buttons">
+			<label class="btn btn-primary btn-xs"><input type="radio" name="format" value="xml" />xml</label>
+			<label class="btn btn-primary btn-xs active"><input type="radio" name="format" value="json" checked />JSON</label>
+			<label class="btn btn-primary btn-xs"><input type="radio" name="format" value="bean" />scala/java bean</label>
+			<label class="btn btn-primary btn-xs"><input type="radio" name="format" value="Nginx" />Nginx</label>
+			<label class="btn btn-primary btn-xs"><input type="radio" name="format" value="Bash" />Bash</label>
+			<label class="btn btn-primary btn-xs"><input type="radio" name="format" value="CSS" />CSS</label>
+			<label class="btn btn-primary btn-xs"><input type="radio" name="format" value="HTTP" />HTTP</label>
+		</div>
+		<button id="clearCdata" class="btn btn-default btn-xs">Clear CDATA</button>
+	</div>
+	<pre id="pre" contenteditable></pre>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
