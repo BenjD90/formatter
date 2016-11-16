@@ -1,0 +1,91 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/github.min.css">
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="beautify.js"></script>
+		<script type="text/javascript" src="benj-beautify.js"></script>
+		<script type="text/javascript">
+			function selectText(containerid) {
+				if (document.selection) {
+					var range = document.body.createTextRange();
+					range.moveToElementText(document.getElementById(containerid));
+					range.select();
+				} else if (window.getSelection) {
+					var range = document.createRange();
+					range.selectNode(document.getElementById(containerid));
+					window.getSelection().addRange(range);
+				}
+			}
+
+			$(document).ready(function() {
+
+				hljs.configure({
+					tabReplace: '  '
+				});
+
+				var format = function() {
+					$('#pre').text($('textarea').val());
+					$('#pre').each(function(i, block) {
+						hljs.highlightBlock(block);
+					});
+				};
+
+				$('textarea').keyup(function() {
+					format();
+				});
+
+				$('#clear').click(function() {
+					$('textarea').val('');
+				});
+
+				$('#clearCdata').click(function() {
+					$('textarea').val($('textarea').val().replace(/(<\!\[CDATA\[)|(\]\]>)/g,''));
+				});
+
+				$('#format').click(function() {
+					var formatChoosen = $('input[name=format]:checked').val();
+					$('#pre').removeClass();
+					$('#pre').addClass(formatChoosen);
+					if(formatChoosen === 'xml') {
+						$('textarea').val(vkbeautify.xml($('textarea').val()));
+					} else if(formatChoosen === 'json') {
+						$('textarea').val(vkbeautify.json($('textarea').val()));
+					} else if(formatChoosen === 'bean') {
+						$('textarea').val(benjbeautify.bean($('textarea').val()));
+					}
+					format();
+				});
+			});
+		</script>
+		<style type="text/css">
+			#pre {
+				background-color: #fff;
+				font-family: Consolas;
+				font-weight: bold;
+			}
+
+			#pre > span {
+				font-weight: normal;
+			}
+		</style>
+		<title>Formatter</title>
+	</head>
+	<body>
+		<input type="text" onkeyup="$('title').html($('#title').val())" id="title" />
+		<textarea style="width: 100%; height: 50%;"></textarea>
+		<button id="clear">Clear</button>
+		<button id="format">Format</button>
+		<button id="select" onClick="selectText('pre')">Select output</button>
+		<label><input type="radio" name="format" value="xml"  />xml</label>
+		<label><input type="radio" name="format" value="json" /> JSON</label>
+		<label><input type="radio" name="format" value="bean" checked />scala/java bean</label>
+		<label><input type="radio" name="format" value="Nginx" /> Nginx</label>
+		<label><input type="radio" name="format" value="Bash" /> Bash</label>
+		<label><input type="radio" name="format" value="CSS" /> CSS</label>
+		<label><input type="radio" name="format" value="HTTP" /> HTTP</label>
+		<button id="clearCdata">Clear Cdata</button>
+		<pre id="pre">
+		</pre>
+	</body>
+</html>
