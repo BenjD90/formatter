@@ -16,6 +16,19 @@
     sel.addRange(range);
 }
 
+function copyToClipboard(id) {
+		var elem = document.getElementById(id)
+		selectText(id);
+    var succeed;
+    try {
+    	  succeed = document.execCommand("copy");
+    } catch(e) {
+        succeed = false;
+    }
+		window.getSelection().removeAllRanges();
+    return succeed;
+}
+
 	$(document).ready(function() {
 		window.updateCSSOut = function() {
 			var formatChoosen = $('input[name=format]:checked').val();
@@ -94,10 +107,10 @@
 		background-color: #fff;
 		font-family: Consolas;
 		font-weight: bold;
-		width: 100%;
+		max-width: 100%;
 		height: calc(100% - 22px);
 		overflow: auto;
-		border-top: 1px solid black;
+		border: none;
 		border-radius: 0px;
 		box-sizing: border-box;
 		margin: 0px;
@@ -118,7 +131,7 @@
 		<input type="text" class="form-control input-xs" onkeyup="$('title').html($('#title').val())" id="title" value="Formatter" />
 		<button id="clear" class="btn btn-default btn-xs">Clear</button>
 		<button id="format" class="btn btn-default btn-xs">Format</button>
-		<button id="select" class="btn btn-default btn-xs" onClick="selectText('pre')">Select output</button>
+		<button id="select" class="btn btn-default btn-xs" onClick="if(!copyToClipboard('pre')) selectText('pre')">Copy output</button>
 		<div class="btn-group" data-toggle="buttons">
 			<label class="btn btn-primary btn-xs"><input type="radio" name="format" value="xml" onChange="updateCSSOut()" />xml</label>
 			<label class="btn btn-primary btn-xs active"><input type="radio" name="format" onChange="updateCSSOut()" value="json" checked />JSON</label>
