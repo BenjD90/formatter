@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  outline: none;
+
+}
+
+.form-control {
+  width: inherit;
+  display: inline-block;
+}
+.input-xs {
+  height: 22px;
+  padding: 2px 5px;
+  font-size: 12px;
+  line-height: 1.5; /* If Placeholder of the input is moved up, rem/modify this. */
+  border-radius: 3px;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+#menu {
+  height: 22px;
+}
+#pre {
+  background-color: #fff;
+  font-family: Consolas;
+  font-weight: bold;
+  max-width: 100%;
+  height: calc(100% - 22px);
+  overflow: auto;
+  border: none;
+  border-radius: 0px;
+  box-sizing: border-box;
+  margin: 0px;
+}
+
+#pre > span {
+  font-weight: normal;
+}
+
+#pre:focus {
+  outline: none;
+}
