@@ -17,13 +17,12 @@
 				if(letter === '(') {
 					deep++;
 					out += '(\n' + getNSpaces(deep);
-				}
-				else if(letter === ')') {
+				} else if(letter === ')') {
 					deep--;
 					out += '\n' + getNSpaces(deep) + ')';
 				} else if(letter === ','){
 					out += ',\n' + getNSpaces(deep);
-				} else {
+				} else if(!letter.match(/\s/)) {
 					out += letter;
 				}
 			}
