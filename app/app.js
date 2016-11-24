@@ -34,6 +34,7 @@ $(document).ready(function() {
   hljs.configure({
     tabReplace: ' '
   });
+  $('#pre').focus();
 
   var format = function() {
     $('#pre').text(getInputVal());
