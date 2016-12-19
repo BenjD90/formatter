@@ -21,14 +21,14 @@ body {
 }
 
 #menu {
-  height: 22px;
+  height: 30px;
 }
 #pre {
   background-color: #fff;
   font-family: Consolas;
   font-weight: bold;
   max-width: 100%;
-  height: calc(100% - 22px);
+  height: calc(100% - 30px);
   overflow: auto;
   border: none;
   border-radius: 0px;
