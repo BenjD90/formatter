@@ -22,8 +22,10 @@
 			<label class="btn btn-primary btn-xs"><input type="radio" name="format" onChange="updateCSSOut()" value="HTTP" />HTTP</label>
 		</div>
 		<button id="clearCdata" class="btn btn-default btn-xs">Clear CDATA</button>
+		<button id="copyShareURL" class="btn btn-default btn-xs">Copy share URL</button>
 	</div>
 	<pre id="pre" contenteditable></pre>
+	<div style="top: -500px; position: absolute;" id="temp"></div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="beautify.js"></script>
