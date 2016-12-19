@@ -56,11 +56,15 @@ $(document).ready(function() {
   });
   if(location.hash && location.hash.substr(1).length > 0) {
     var data = JSON.parse(decodeURIComponent(location.hash.substr(1)));
+    $('title').html(data.title);
+    $('#title').val(data.title);
     $('input[name="format"][value="'+data.type+'"]').prop('checked', true);
     $('label').removeClass('active');
     $('input[name="format"][value="'+data.type+'"]').parent().addClass('active');
-    $('#pre').text(data.data);
-    onFormatClick();
+    if(data.data) {
+      $('#pre').text(data.data);
+      onFormatClick();
+    }
   }
   $('#pre').focus();
   //END INIT
@@ -83,6 +87,7 @@ $(document).ready(function() {
 
   $('#copyShareURL').click(function() {
     var data = {
+      title: $('title').html(),
       type: $('input[name=format]:checked').val(),
       data: getInputVal()
     };
