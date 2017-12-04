@@ -1,10 +1,10 @@
 
 <html>
 <head>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/github.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
 	<link rel="stylesheet" href="style.css" />
-<title>Formatter</title>
+	<title>Formatter</title>
 </head>
 <body>
 	<div id="menu">
@@ -15,6 +15,7 @@
 		<div class="btn-group" data-toggle="buttons">
 			<label class="btn btn-primary btn-sm"><input type="radio" name="format" value="xml" onChange="updateCSSOut()" />xml</label>
 			<label class="btn btn-primary btn-sm active"><input type="radio" name="format" onChange="updateCSSOut()" value="json" checked />JSON</label>
+			<label class="btn btn-primary btn-sm"><input type="radio" name="format" onChange="updateCSSOut()" value="javascript" checked />js</label>
 			<label class="btn btn-primary btn-sm"><input type="radio" name="format" onChange="updateCSSOut()" value="bean" />scala/java bean</label>
 			<label class="btn btn-primary btn-sm"><input type="radio" name="format" onChange="updateCSSOut()" value="Nginx" />Nginx</label>
 			<label class="btn btn-primary btn-sm"><input type="radio" name="format" onChange="updateCSSOut()" value="Bash" />Bash</label>
@@ -26,11 +27,13 @@
 	</div>
 	<pre id="pre" contenteditable></pre>
 	<div style="top: -500px; position: absolute;" id="temp"></div>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="lzw_encoder.js"></script>
 	<script type="text/javascript" src="beautify.js"></script>
 	<script type="text/javascript" src="benj-beautify.js"></script>
 	<script type="text/javascript" src="app.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.4/beautify.js"></script>
 </body>
 </html>

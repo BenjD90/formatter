@@ -1,3 +1,12 @@
+// ucs-2 string to base64 encoded ascii
+function utoa(str) {
+  return window.btoa(unescape(encodeURIComponent(str)));
+}
+// base64 encoded ascii to ucs-2 string
+function atou(str) {
+  return decodeURIComponent(escape(window.atob(str)));
+}
+
 function selectText(id) {
   var range = document.createRange();
   range.selectNodeContents(document.getElementById(id));
@@ -44,6 +53,8 @@ $(document).ready(function() {
       $('#pre').text(vkbeautify.xml(getInputVal()));
     } else if(formatChoosen === 'json') {
       $('#pre').text(vkbeautify.json(getInputVal()));
+    } else if(formatChoosen === 'javascript') {
+      $('#pre').text(js_beautify(getInputVal(), { indent_size: 2 }));
     } else if(formatChoosen === 'bean') {
       $('#pre').text(benjbeautify.bean(getInputVal()));
     }
@@ -62,7 +73,7 @@ $(document).ready(function() {
     $('label').removeClass('active');
     $('input[name="format"][value="'+data.type+'"]').parent().addClass('active');
     if(data.data) {
-      $('#pre').text(data.data);
+      $('#pre').text(lzw_decode(atou(data.data)));
       onFormatClick();
     }
   }
@@ -89,7 +100,7 @@ $(document).ready(function() {
     var data = {
       title: $('title').html(),
       type: $('input[name=format]:checked').val(),
-      data: getInputVal()
+      data: utoa(lzw_encode(getInputVal()))
     };
     $('#temp').text(location.origin + location.pathname+'#'+ encodeURIComponent(JSON.stringify(data)));
     copyToClipboard('temp');

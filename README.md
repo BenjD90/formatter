@@ -1,5 +1,6 @@
-# formatter
+# Simple Formatter Online
 
 Fomat JSON, XML, CSS 
 
-Available online at : https://benjd90.github.io/formatter/app/
+Online Demo : https://benjd90.github.io/formatter/app/
+
