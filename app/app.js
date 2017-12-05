@@ -66,14 +66,14 @@ $(document).ready(function() {
     tabReplace: ' '
   });
   if(location.hash && location.hash.substr(1).length > 0) {
-    var data = JSON.parse(decodeURIComponent(location.hash.substr(1)));
+    var data = JSON.parse(lzw_decode(atou(location.hash.substr(1))));
     $('title').html(data.title);
     $('#title').val(data.title);
     $('input[name="format"][value="'+data.type+'"]').prop('checked', true);
     $('label').removeClass('active');
     $('input[name="format"][value="'+data.type+'"]').parent().addClass('active');
     if(data.data) {
-      $('#pre').text(lzw_decode(atou(data.data)));
+      $('#pre').text(data.data);
       onFormatClick();
     }
   }
@@ -100,9 +100,9 @@ $(document).ready(function() {
     var data = {
       title: $('title').html(),
       type: $('input[name=format]:checked').val(),
-      data: utoa(lzw_encode(getInputVal()))
+      data: getInputVal()
     };
-    $('#temp').text(location.origin + location.pathname+'#'+ encodeURIComponent(JSON.stringify(data)));
+    $('#temp').text(location.origin + location.pathname+'#'+ utoa(lzw_encode(JSON.stringify(data))));
     copyToClipboard('temp');
   });
 });
